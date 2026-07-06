@@ -256,18 +256,14 @@ a{ color:inherit; text-decoration:none; }
 .loc-row{ margin-top:30px; padding:20px 0; border-top:1px solid var(--line); display:flex; gap:24px; }
 .loc-row .k{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; width:96px; flex:none; padding-top:2px; }
 .loc-row .v{ font-size:16px; }
-.loc-map{ min-height:340px; position:relative; }
-.loc-map .ph-scene{ position:absolute; inset:0; }
-/* Kakao roughmap — fill the panel responsively */
-.loc-map{ display:flex; }
-.loc-map .root_daum_roughmap{ width:100%; }
-.loc-map .root_daum_roughmap .wrap_map{ width:100%!important; }
-.loc-map .root_daum_roughmap .wrap_map iframe,
-.loc-map .root_daum_roughmap .wrap_map img{ width:100%!important; }
-.naver-link{ display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-size:14px; font-weight:600; color:var(--olive); transition:color .3s; }
-.naver-link:hover{ color:var(--apple); }
-.naver-link svg{ color:var(--ink-faint); }
-.mb-logo{ width:20px; height:20px; border-radius:6px; display:grid; place-items:center; font-weight:800; font-size:13px; color:#fff; background:#03C75A; }
+.loc-map{ min-height:340px; position:relative; display:flex; }
+.loc-map .gmap{ border:0; width:100%; height:100%; min-height:340px; display:block; filter:grayscale(.12) contrast(.98); }
+.map-linkrow{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.map-mini{ display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; color:var(--ink); border:1px solid var(--line); padding:8px 14px; border-radius:100px; transition:background .3s, border-color .3s, transform .3s; }
+.map-mini:hover{ background:var(--white); border-color:transparent; box-shadow:var(--shadow-soft); transform:translateY(-2px); color:var(--ink); }
+.map-mini svg{ color:var(--ink-faint); }
+.mb-logo{ width:19px; height:19px; border-radius:6px; display:grid; place-items:center; font-weight:800; font-size:12px; color:#fff; background:#03C75A; }
+.mb-logo.k{ background:#FEE500; color:#3A1D1D; }
 
 /* Footer */
 .foot{ padding:clamp(64px,8vw,110px) 0 44px; }
@@ -650,18 +646,26 @@ a{ color:inherit; text-decoration:none; }
     <div class="loc-copy">
       <span class="eyebrow" style="display:block;margin-bottom:20px">Visit &amp; Contact</span>
       <h2>강릉에서<br>계절을 전합니다.</h2>
-      <div class="loc-row"><span class="k">Location</span><span class="v">강원특별자치도 강릉시 강동면 율곡로 791-28<br>
-        <a class="naver-link" target="_blank" rel="noopener" href="https://map.naver.com/p/search/강원특별자치도 강릉시 강동면 율곡로 791-28">
-          <span class="mb-logo">N</span>네이버 지도에서 보기
-          <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M3 10L10 3M5 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a></span></div>
+      <div class="loc-row"><span class="k">Location</span><span class="v">강원특별자치도 강릉시 강동면 율곡로 791-28
+        <span class="map-linkrow">
+          <a class="map-mini" target="_blank" rel="noopener" href="https://map.naver.com/p/search/강원특별자치도 강릉시 강동면 율곡로 791-28">
+            <span class="mb-logo">N</span>네이버 지도
+            <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M3 10L10 3M5 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="map-mini" target="_blank" rel="noopener" href="https://map.kakao.com/link/search/강원특별자치도 강릉시 강동면 율곡로 791-28">
+            <span class="mb-logo k">k</span>카카오맵
+            <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M3 10L10 3M5 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </span></span></div>
       <div class="loc-row"><span class="k">Contact</span><span class="v">대표 정의성 <a href="tel:010-8790-5593">010-8790-5593</a><br>대표 이명숙 <a href="tel:010-5027-5593">010-5027-5593</a></span></div>
       <div class="loc-row"><span class="k">Email</span><span class="v">appleorchard@naver.com</span></div>
       <div class="loc-row"><span class="k">Season</span><span class="v">가을 수확 · 한정 물량으로 전해드립니다</span></div>
     </div>
     <div class="loc-map">
-      <!-- 카카오맵 · 지도퍼가기 -->
-      <div id="daumRoughmapContainer1783303847219" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+      <!-- 구글 지도 임베드 · API 키/도메인 등록 불필요 -->
+      <iframe class="gmap" title="귀나무골 사과농장 위치"
+        src="https://www.google.com/maps?q=강원특별자치도 강릉시 강동면 율곡로 791-28&hl=ko&z=16&output=embed"
+        loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </section>
@@ -689,7 +693,6 @@ a{ color:inherit; text-decoration:none; }
       </div>
       <div>
         <h5>Follow</h5>
-        <a href="#">Instagram</a>
         <a href="#">Naver Blog</a>
       </div>
     </div>
@@ -790,15 +793,5 @@ document.querySelectorAll('.ph-scene[data-scene]').forEach(el=>{
 });
 </script>
 
-<!-- ===== 카카오맵 지도퍼가기 · 설치 + 실행 스크립트 ===== -->
-<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-<script charset="UTF-8">
-  new daum.roughmap.Lander({
-    "timestamp" : "1783303847219",
-    "key" : "qcy7m3f5zit",
-    "mapWidth" : "100%",
-    "mapHeight" : "360"
-  }).render();
-</script>
 </body>
 </html>
