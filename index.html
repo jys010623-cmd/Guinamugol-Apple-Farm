@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>귀나무골 사과농장 — 강릉의 계절이 키운 사과</title>
+<meta name="description" content="강릉에서 30년, 자연의 시간을 따라 정성껏 키워낸 사과를 전합니다." />
+
+<!-- ─── FONTS ─── -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   귀나무골 사과농장 — Warm Minimal Brand Landing
+   Design tokens
+   ============================================================ */
+:root{
+  --bg:            #FBF9F5;   /* warm white */
+  --bg-cream:      #F4EFE6;   /* cream panel */
+  --bg-cream-2:    #EFE8DB;   /* deeper cream */
+  --ink:           #292420;   /* warm near-black */
+  --ink-soft:      #6E655C;   /* muted body */
+  --ink-faint:     #A79E92;   /* captions */
+  --line:          rgba(41,36,32,.10);
+  --apple:         #C33F2C;   /* apple red — used sparingly */
+  --apple-soft:    #E7B7AD;
+  --olive:         #7A7C4E;   /* olive green */
+  --beige:         #E4D8C4;
+  --white:         #FFFFFF;
+
+  --r-lg: 40px;
+  --r-md: 28px;
+  --r-sm: 18px;
+
+  --shadow-soft: 0 30px 60px -30px rgba(60,45,30,.28);
+  --ease: cubic-bezier(.22,.61,.36,1);
+
+  --pad: clamp(22px, 5vw, 88px);
+  --maxw: 1280px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body{
+  font-family:"Pretendard",system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+
+::selection{ background:var(--apple-soft); color:var(--ink); }
+
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad); }
+.serif{ font-family:"Fraunces",serif; font-optical-sizing:auto; }
+
+.eyebrow{
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink-faint); font-weight:600;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed; inset:0 0 auto 0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px var(--pad);
+  transition:background .5s var(--ease), padding .5s var(--ease), box-shadow .5s var(--ease);
+}
+.nav.scrolled{
+  background:rgba(251,249,245,.72);
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+  padding:15px var(--pad);
+  box-shadow:0 1px 0 var(--line);
+}
+.brand{ display:flex; align-items:center; gap:11px; }
+.brand-mark{ width:34px; height:34px; }
+.brand-txt b{ font-size:16px; font-weight:700; letter-spacing:-.01em; display:block; line-height:1.1; }
+.brand-txt span{ font-size:9px; letter-spacing:.2em; color:var(--ink-faint); font-weight:600; }
+.nav-links{ display:flex; gap:38px; }
+.nav-links a{ font-size:14.5px; font-weight:500; color:var(--ink-soft); transition:color .3s; position:relative; }
+.nav-links a::after{ content:""; position:absolute; left:0; bottom:-5px; width:0; height:1.5px; background:var(--apple); transition:width .35s var(--ease); }
+.nav-links a:hover{ color:var(--ink); }
+.nav-links a:hover::after{ width:100%; }
+.nav-cta{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--ink); color:var(--bg);
+  padding:11px 22px; border-radius:100px; font-size:14px; font-weight:600;
+  transition:transform .35s var(--ease), background .35s;
+}
+.nav-cta:hover{ transform:translateY(-2px); background:var(--apple); }
+.nav-cta .dot{ width:6px; height:6px; border-radius:50%; background:var(--apple); }
+.nav-cta:hover .dot{ background:var(--bg); }
+.nav-burger{ display:none; cursor:pointer; }
+.m-contact{ display:none; }
+.burger-box{ position:relative; width:20px; height:14px; display:block; }
+.burger-box i{ position:absolute; left:0; width:100%; height:1.8px; background:var(--ink); border-radius:2px; transition:transform .4s var(--ease), top .4s var(--ease), opacity .3s; }
+.burger-box i:first-child{ top:3px; } .burger-box i:last-child{ top:9px; }
+.nav.open .burger-box i:first-child{ top:6px; transform:rotate(45deg); }
+.nav.open .burger-box i:last-child{ top:6px; transform:rotate(-45deg); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative; min-height:100svh;
+  display:grid; grid-template-columns:1fr 1fr; align-items:center;
+  padding-top:80px; overflow:hidden;
+}
+.hero-copy{ padding-left:var(--pad); padding-right:24px; position:relative; z-index:3; }
+.hero h1{
+  font-weight:700; letter-spacing:-.03em; line-height:1.04;
+  font-size:clamp(44px, 6.4vw, 88px);
+}
+.hero h1 .accent{ color:var(--apple); }
+.hero h1 .light{ font-weight:300; }
+.hero-sub{
+  margin-top:30px; max-width:34ch;
+  font-size:clamp(15px,1.25vw,18px); color:var(--ink-soft); font-weight:400;
+}
+.hero-meta{ margin-top:56px; display:flex; align-items:center; gap:18px; }
+.scroll-cue{ display:flex; align-items:center; gap:16px; color:var(--ink-faint); }
+.scroll-cue .lbl{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:600; }
+.scroll-line{ width:1px; height:56px; background:linear-gradient(var(--ink-faint),transparent); position:relative; overflow:hidden; }
+.scroll-line::after{ content:""; position:absolute; top:-56px; left:0; width:1px; height:56px; background:var(--apple); animation:drop 2.4s var(--ease) infinite; }
+@keyframes drop{ 0%{transform:translateY(0)} 60%,100%{transform:translateY(112px)} }
+
+.hero-visual{ position:relative; height:100svh; }
+.hero-apple{
+  position:absolute; top:50%; left:50%;
+  width:min(78vh,760px); transform:translate(-50%,-50%);
+  will-change:transform; filter:drop-shadow(0 50px 60px rgba(120,40,25,.22));
+}
+.hero-index{
+  position:absolute; right:calc(var(--pad) - 8px); top:50%; transform:translateY(-50%);
+  display:flex; flex-direction:column; align-items:flex-end; gap:14px; z-index:4;
+}
+.hero-index .num{ font-size:12px; letter-spacing:.2em; color:var(--ink-faint); font-weight:600; }
+.hero-index .dots{ display:flex; flex-direction:column; gap:9px; }
+.hero-index .dots i{ width:5px; height:5px; border-radius:50%; background:var(--ink-faint); opacity:.5; }
+.hero-index .dots i:first-child{ background:var(--apple); opacity:1; }
+
+/* ============================================================
+   REVEAL util
+   ============================================================ */
+.reveal{ opacity:0; transform:translateY(38px); transition:opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.d1{ transition-delay:.08s } .reveal.d2{ transition-delay:.16s }
+.reveal.d3{ transition-delay:.24s } .reveal.d4{ transition-delay:.32s }
+
+/* ============================================================
+   NUMBERS — 30 Years / 2nd Harvest
+   ============================================================ */
+.numbers{ background:var(--bg-cream); border-radius:var(--r-lg); margin:0 var(--pad); padding:clamp(40px,6vw,88px); }
+.numbers-grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(30px,5vw,80px); align-items:center; }
+.num-block .big{ font-size:clamp(96px,15vw,220px); line-height:.82; font-weight:300; color:var(--apple); letter-spacing:-.02em; }
+.num-block .big small{ font-size:.28em; font-weight:400; letter-spacing:.16em; text-transform:uppercase; color:var(--olive); display:block; margin-top:18px; }
+.num-block p{ margin-top:26px; font-size:17px; color:var(--ink-soft); max-width:26ch; }
+.num-divider{ height:1px; background:var(--line); margin:40px 0; }
+.harvest-card{
+  background:var(--white); border-radius:var(--r-md); padding:34px 36px;
+  box-shadow:var(--shadow-soft); max-width:320px;
+}
+.harvest-card .yr{ font-family:"Fraunces",serif; font-size:64px; font-weight:400; color:var(--olive); line-height:1; }
+.harvest-card .yr span{ font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); display:block; margin-top:8px; font-family:"Pretendard"; }
+.harvest-card p{ margin-top:22px; font-size:15px; color:var(--ink-soft); }
+.harvest-card .leaf{ margin-top:24px; }
+
+.num-media{ position:relative; border-radius:var(--r-md); overflow:hidden; aspect-ratio:5/4.4; box-shadow:var(--shadow-soft); }
+.num-media .ph-scene{ height:100%; }
+.play-btn{
+  position:absolute; right:24px; bottom:24px; width:64px; height:64px; border-radius:50%;
+  background:rgba(255,255,255,.85); backdrop-filter:blur(6px); border:none; cursor:pointer;
+  display:grid; place-items:center; box-shadow:0 12px 30px -12px rgba(0,0,0,.4);
+  transition:transform .4s var(--ease);
+}
+.play-btn:hover{ transform:scale(1.08); }
+.play-btn svg{ margin-left:3px; }
+
+/* ============================================================
+   SECTION heads
+   ============================================================ */
+.section{ padding:clamp(90px,12vw,170px) 0; }
+.sec-head{ max-width:640px; }
+.sec-head h2{ font-size:clamp(30px,4vw,52px); font-weight:700; letter-spacing:-.025em; line-height:1.12; }
+.sec-head p{ margin-top:18px; font-size:16px; color:var(--ink-soft); }
+
+/* Features */
+.features-top{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+.feat-grid{ margin-top:64px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.feat{ padding:38px 30px; border-radius:var(--r-md); background:transparent; border:1px solid var(--line); transition:background .5s var(--ease), transform .5s var(--ease), border-color .5s; }
+.feat:hover{ background:var(--white); transform:translateY(-6px); border-color:transparent; box-shadow:var(--shadow-soft); }
+.feat-ic{ width:52px; height:52px; border-radius:16px; display:grid; place-items:center; margin-bottom:26px; background:var(--bg-cream); }
+.feat h3{ font-size:19px; font-weight:700; letter-spacing:-.01em; }
+.feat p{ margin-top:10px; font-size:14px; color:var(--ink-soft); line-height:1.55; }
+
+/* Varieties */
+.var-grid{ margin-top:64px; display:grid; grid-template-columns:repeat(5,1fr); gap:14px; }
+.var{ text-align:center; padding:38px 18px 34px; border-radius:var(--r-md); border:1px solid var(--line); transition:background .5s var(--ease), transform .5s var(--ease), border-color .5s; }
+.var:hover{ background:var(--white); transform:translateY(-6px); border-color:transparent; box-shadow:var(--shadow-soft); }
+.var-orb{ width:86px; height:86px; margin:0 auto 22px; }
+.var-orb svg{ width:100%; height:100%; filter:drop-shadow(0 10px 16px rgba(120,50,30,.16)); }
+.var-no{ font-size:11px; letter-spacing:.2em; color:var(--apple); font-weight:700; }
+.var h4{ font-size:18px; font-weight:700; margin-top:7px; letter-spacing:-.01em; }
+.var h4 span{ display:block; font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; margin-top:5px; }
+.var p{ font-size:13px; color:var(--ink-soft); margin-top:11px; }
+@media (max-width:1020px){ .var-grid{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:600px){ .var-grid{ grid-template-columns:repeat(2,1fr); } }
+
+/* Growth timeline */
+.growth{ background:var(--bg-cream); }
+.growth-track{ margin-top:70px; display:grid; grid-template-columns:repeat(5,1fr); gap:12px; position:relative; }
+.growth-track::before{ content:""; position:absolute; top:64px; left:8%; right:8%; height:1px; background:var(--line); }
+.stage{ text-align:center; position:relative; }
+.stage-orb{
+  width:128px; height:128px; border-radius:50%; margin:0 auto 26px; overflow:hidden;
+  box-shadow:var(--shadow-soft); position:relative; background:var(--white);
+  transition:transform .5s var(--ease);
+}
+.stage:hover .stage-orb{ transform:scale(1.06) translateY(-4px); }
+.stage-no{ font-size:12px; letter-spacing:.2em; color:var(--apple); font-weight:700; }
+.stage h4{ font-size:18px; font-weight:700; margin-top:6px; }
+.stage p{ font-size:13px; color:var(--ink-soft); margin-top:8px; }
+
+/* Quote band */
+.quote-band{ margin:0 var(--pad); border-radius:var(--r-lg); overflow:hidden; position:relative; min-height:min(78vh,620px); display:flex; align-items:center; }
+.quote-band .ph-scene{ position:absolute; inset:0; }
+.quote-inner{ position:relative; z-index:2; padding:clamp(40px,7vw,90px); }
+.quote-inner .apple-ic{ margin-bottom:30px; }
+.quote-inner h2{ font-family:"Pretendard"; font-size:clamp(26px,3.4vw,44px); font-weight:700; color:#fff; letter-spacing:-.02em; line-height:1.3; text-shadow:0 2px 30px rgba(0,0,0,.25); }
+
+/* Story */
+.story-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(40px,6vw,96px); align-items:center; }
+.story-copy .eyebrow{ margin-bottom:22px; display:block; }
+.story-copy h2{ font-size:clamp(30px,3.8vw,50px); font-weight:700; letter-spacing:-.025em; line-height:1.14; }
+.story-copy .lead{ margin-top:28px; font-size:17px; color:var(--ink-soft); }
+.story-copy p + p{ margin-top:18px; }
+.crop-tags{ margin-top:34px; display:flex; flex-wrap:wrap; gap:10px; }
+.crop-tags span{ font-size:13.5px; color:var(--olive); border:1px solid var(--line); padding:8px 16px; border-radius:100px; font-weight:500; transition:background .3s,border-color .3s; }
+.crop-tags span:hover{ background:var(--white); border-color:transparent; box-shadow:var(--shadow-soft); }
+.crop-tags span.apple{ color:#fff; background:var(--apple); border-color:var(--apple); }
+.story-media{ border-radius:var(--r-md); overflow:hidden; aspect-ratio:4/5; box-shadow:var(--shadow-soft); }
+.story-media .ph-scene{ height:100%; }
+
+/* Location */
+.loc{ display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:stretch; background:var(--bg-cream); border-radius:var(--r-lg); margin:0 var(--pad); overflow:hidden; }
+.loc-copy{ padding:clamp(40px,6vw,80px); }
+.loc-copy h2{ font-size:clamp(26px,3vw,40px); font-weight:700; letter-spacing:-.02em; }
+.loc-row{ margin-top:30px; padding:20px 0; border-top:1px solid var(--line); display:flex; gap:24px; }
+.loc-row .k{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; width:96px; flex:none; padding-top:2px; }
+.loc-row .v{ font-size:16px; }
+.loc-map{ min-height:340px; position:relative; }
+.loc-map .ph-scene{ position:absolute; inset:0; }
+/* Kakao roughmap — fill the panel responsively */
+.loc-map{ display:flex; }
+.loc-map .root_daum_roughmap{ width:100%; }
+.loc-map .root_daum_roughmap .wrap_map{ width:100%!important; }
+.loc-map .root_daum_roughmap .wrap_map iframe,
+.loc-map .root_daum_roughmap .wrap_map img{ width:100%!important; }
+.naver-link{ display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-size:14px; font-weight:600; color:var(--olive); transition:color .3s; }
+.naver-link:hover{ color:var(--apple); }
+.naver-link svg{ color:var(--ink-faint); }
+.mb-logo{ width:20px; height:20px; border-radius:6px; display:grid; place-items:center; font-weight:800; font-size:13px; color:#fff; background:#03C75A; }
+
+/* Footer */
+.foot{ padding:clamp(64px,8vw,110px) 0 44px; }
+.foot-top{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; }
+.foot .brand-txt b{ font-size:18px; }
+.foot h5{ font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; margin-bottom:16px; }
+.foot a, .foot .fitem{ display:block; font-size:15px; color:var(--ink-soft); margin-bottom:10px; transition:color .3s; }
+.foot a:hover{ color:var(--apple); }
+.foot-bottom{ margin-top:60px; padding-top:26px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.foot-bottom small{ font-size:13px; color:var(--ink-faint); }
+.to-top{ width:46px; height:46px; border-radius:50%; border:1px solid var(--line); background:transparent; cursor:pointer; display:grid; place-items:center; transition:background .35s,transform .35s; }
+.to-top:hover{ background:var(--white); transform:translateY(-3px); box-shadow:var(--shadow-soft); }
+
+/* ============================================================
+   PLACEHOLDER SCENES  (swap these for real photos — see guide)
+   ============================================================ */
+.ph-scene{ width:100%; height:100%; position:relative; overflow:hidden; }
+.ph-scene svg{ width:100%; height:100%; display:block; object-fit:cover; }
+.ph-tag{
+  position:absolute; left:14px; bottom:14px; z-index:5;
+  font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; font-weight:600;
+  color:rgba(255,255,255,.9); background:rgba(0,0,0,.28); backdrop-filter:blur(4px);
+  padding:6px 11px; border-radius:100px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+/* ── Tablet landscape & below (≤1024px) ── */
+@media (max-width:1024px){
+  .nav-links{ gap:28px; }
+  .hero{ grid-template-columns:1fr; min-height:auto; padding-top:116px; }
+  .hero-visual{ height:54vh; order:-1; }
+  .hero-apple{ width:min(50vh,420px); }
+  .hero-copy{ padding:36px var(--pad) 56px; }
+  .hero-index{ display:none; }
+  .numbers-grid{ grid-template-columns:1fr; gap:40px; }
+  .num-media{ aspect-ratio:16/10; }
+  .feat-grid{ grid-template-columns:1fr 1fr; }
+  .growth-track{ grid-template-columns:repeat(3,1fr); gap:40px 14px; }
+  .growth-track::before{ display:none; }
+  .story-grid{ grid-template-columns:1fr; }
+  .story-media{ aspect-ratio:16/11; order:-1; max-height:60vh; }
+  .loc{ grid-template-columns:1fr; }
+  .loc-map{ min-height:340px; order:2; }
+  .foot-top{ grid-template-columns:1fr 1fr; gap:36px; }
+}
+
+/* ── Tablet portrait (≤820px) ── */
+@media (max-width:820px){
+  .quote-band{ min-height:56vh; }
+  .growth-track{ grid-template-columns:repeat(3,1fr); }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width:600px){
+  :root{ --r-lg:28px; --r-md:22px; }
+  .nav{ padding:16px var(--pad); }
+  .nav.scrolled{ padding:12px var(--pad); }
+  .nav-cta{ display:none; }
+  .nav-burger{ display:grid; place-items:center; width:44px; height:44px; border-radius:13px; border:1px solid var(--line); background:transparent; z-index:120; }
+
+  /* full-screen mobile menu */
+  .nav-links{
+    position:fixed; inset:0; z-index:110;
+    flex-direction:column; gap:0; justify-content:center;
+    padding:0 var(--pad);
+    background:rgba(251,249,245,.97);
+    backdrop-filter:saturate(180%) blur(22px); -webkit-backdrop-filter:saturate(180%) blur(22px);
+    transform:translateY(-8%); opacity:0; pointer-events:none;
+    transition:transform .5s var(--ease), opacity .4s var(--ease);
+  }
+  .nav.open .nav-links{ transform:none; opacity:1; pointer-events:auto; }
+  .nav-links a{ font-size:30px; font-weight:700; color:var(--ink); padding:20px 0; border-bottom:1px solid var(--line); letter-spacing:-.02em; }
+  .nav-links a::after{ display:none; }
+  .nav-links .m-contact{ margin-top:32px; border:none; color:#fff; background:var(--apple); border-radius:100px; text-align:center; font-size:18px; padding:16px; }
+  body.menu-open{ overflow:hidden; }
+
+  .hero-visual{ height:46vh; }
+  .hero h1{ line-height:1.08; }
+  .hero-meta{ margin-top:40px; }
+  .numbers{ padding:34px 24px; }
+  .num-media{ aspect-ratio:4/3; }
+  .section{ padding:clamp(64px,16vw,90px) 0; }
+  .feat-grid{ grid-template-columns:1fr; gap:12px; }
+  .feat{ display:flex; align-items:flex-start; gap:18px; padding:24px; }
+  .feat-ic{ margin-bottom:0; flex:none; }
+  .growth-track{ grid-template-columns:1fr 1fr; gap:36px 14px; }
+  .stage-orb{ width:104px; height:104px; }
+  .quote-band{ min-height:48vh; }
+  .foot-top{ grid-template-columns:1fr; gap:30px; }
+  .harvest-card{ max-width:100%; }
+  .loc-copy{ padding:34px 26px; }
+  .loc-row{ flex-direction:column; gap:6px; }
+  .loc-row .k{ width:auto; }
+}
+
+/* ── Small phones (≤380px) ── */
+@media (max-width:380px){
+  .growth-track,.var-grid{ grid-template-columns:1fr 1fr; }
+  .hero h1{ font-size:38px; }
+  .stage-orb{ width:92px; height:92px; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .scroll-line::after{ animation:none; }
+  .nav-links{ transition:opacity .2s; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">
+    <svg class="brand-mark" viewBox="0 0 40 40" fill="none">
+      <path d="M20 12c-3-3-9-3-11 1-2.5 5 .5 13 4 16 2 1.8 4 1.8 6 .6 2 1.2 4 1.2 6-.6 3.5-3 6.5-11 4-16-2-4-8-4-11-1z" fill="#C33F2C"/>
+      <path d="M20 12c0-3 2-5 5-6-1 3-2.5 5-5 6z" fill="#7A7C4E"/>
+    </svg>
+    <span class="brand-txt"><b>귀나무골 사과농장</b><span>GUINAMUGOL APPLE FARM</span></span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#apple">Apple</a>
+    <a href="#features">Farm</a>
+    <a href="#story">Story</a>
+    <a href="#location">Location</a>
+    <a href="#location" class="m-contact">Contact</a>
+  </div>
+  <a href="#location" class="nav-cta"><span class="dot"></span>Contact</a>
+  <button class="nav-burger" id="navBurger" aria-label="메뉴 열기" aria-expanded="false">
+    <span class="burger-box"><i></i><i></i></span>
+  </button>
+</nav>
+
+<span id="top"></span>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="apple">
+  <div class="hero-copy">
+    <h1 class="reveal in">강릉의 계절이<br><span class="light">키운</span> <span class="accent">사과</span>.</h1>
+    <p class="hero-sub reveal in d1">30년의 농사, 그리고 2년의 사과.<br>자연의 시간을 따라 정성껏 키워낸 사과를 전합니다.</p>
+    <div class="hero-meta reveal in d2">
+      <div class="scroll-cue">
+        <span class="lbl">Scroll</span>
+        <span class="scroll-line"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <!-- ▼▼ SWAP: replace this SVG apple with a hero photo <img class="hero-apple" src="..."> ▼▼ -->
+    <svg class="hero-apple" id="heroApple" viewBox="0 0 520 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="appleBody" cx="38%" cy="34%" r="72%">
+          <stop offset="0%" stop-color="#F27E5B"/>
+          <stop offset="42%" stop-color="#D8492F"/>
+          <stop offset="100%" stop-color="#A32C1C"/>
+        </radialGradient>
+        <radialGradient id="appleHi" cx="34%" cy="30%" r="40%">
+          <stop offset="0%" stop-color="#FFF" stop-opacity=".55"/>
+          <stop offset="100%" stop-color="#FFF" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="leafG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8E9159"/>
+          <stop offset="100%" stop-color="#5F6238"/>
+        </linearGradient>
+      </defs>
+      <ellipse cx="262" cy="500" rx="150" ry="26" fill="#C33F2C" opacity=".10"/>
+      <path d="M200 96c-2 22-24 30-46 24" stroke="#6B4A2E" stroke-width="9" stroke-linecap="round"/>
+      <path d="M206 92c18-30 52-44 86-40-6 34-30 58-64 62-14 2-24-8-22-22z" fill="url(#leafG)"/>
+      <path d="M232 74c22-8 44-6 60-2" stroke="#4E5230" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+      <path d="M258 118c-30-8-70 2-96 34-40 48-30 150 6 216 24 44 56 66 92 66 18 0 30-8 42-18 12 10 24 18 42 18 36 0 68-22 92-66 36-66 46-168 6-216-26-32-66-42-96-34-14 4-26 10-44 10s-30-6-44-10z" fill="url(#appleBody)"/>
+      <path d="M258 118c-30-8-70 2-96 34-40 48-30 150 6 216 20 36 44 58 74 64-40-40-60-118-40-198 10-42 34-92 56-116z" fill="#fff" opacity=".07"/>
+      <ellipse cx="196" cy="190" rx="52" ry="66" fill="url(#appleHi)"/>
+    </svg>
+  </div>
+
+  <aside class="hero-index">
+    <span class="num">01 — 06</span>
+    <span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+  </aside>
+</header>
+
+<!-- ================= NUMBERS ================= -->
+<section class="section" style="padding-top:clamp(40px,7vw,90px)">
+  <div class="numbers reveal">
+    <div class="numbers-grid">
+      <div class="num-block">
+        <div class="big serif">30<small>Years of Farming</small></div>
+        <p>강릉의 땅과 계절 속에서, 30년 동안 자연과 함께 농사를 지어왔습니다.</p>
+        <div class="num-divider"></div>
+        <div class="harvest-card">
+          <div class="yr serif">02<span>Nd Harvest · 사과 2년차</span></div>
+          <p>사과는 올해로 두 번째 수확. 오랜 농사의 손끝에서 새로운 계절이 시작됩니다.</p>
+          <svg class="leaf" width="30" height="16" viewBox="0 0 30 16" fill="none"><path d="M2 14C10 14 24 10 28 2 18 0 6 4 2 14z" fill="#7A7C4E"/></svg>
+        </div>
+      </div>
+
+      <div class="num-media">
+        <!-- ▼ SWAP: 과수원 전경 사진 ▼ -->
+        <div class="ph-scene" data-scene="orchard-day"></div>
+        <span class="ph-tag">과수원 전경 · 사진 교체</span>
+        <button class="play-btn" aria-label="play">
+          <svg width="18" height="20" viewBox="0 0 18 20"><path d="M0 0l18 10L0 20z" fill="#292420"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="features-top">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Our Apple</span>
+        <h2 style="margin-top:16px">우리 사과의 특징</h2>
+      </div>
+      <p class="reveal d1" style="max-width:30ch;color:var(--ink-soft);font-size:16px">좋은 땅, 맑은 공기, 큰 일교차.<br>자연이 만든 건강한 사과의 맛.</p>
+    </div>
+
+    <div class="feat-grid">
+      <article class="feat reveal">
+        <div class="feat-ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3c4 4 6 7 6 11a6 6 0 11-12 0c0-4 2-7 6-11z" stroke="#C33F2C" stroke-width="1.6"/></svg>
+        </div>
+        <h3>아삭한 식감</h3>
+        <p>단단하고 아삭한, 한 입 베어 무는 순간의 신선함.</p>
+      </article>
+      <article class="feat reveal d1">
+        <div class="feat-ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="#D9A21C" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="#D9A21C" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <h3>풍부한 과즙</h3>
+        <p>한 입 가득 퍼지는 맑고 달큰한 과즙.</p>
+      </article>
+      <article class="feat reveal d2">
+        <div class="feat-ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2 20l6-11 4 6 3-5 7 10z" stroke="#7A7C4E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>강릉의 자연</h3>
+        <p>맑은 공기와 큰 일교차가 건네는 계절의 선물.</p>
+      </article>
+      <article class="feat reveal d3">
+        <div class="feat-ic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20S3 14 3 8.5A4.5 4.5 0 0112 6a4.5 4.5 0 019 2.5C21 14 12 20 12 20z" stroke="#C33F2C" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>정성스러운 재배</h3>
+        <p>자연을 존중하며, 손끝으로 돌보는 건강한 농사.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VARIETIES ================= -->
+<section class="section" id="varieties" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Varieties</span>
+      <h2 style="margin-top:16px">우리가 키우는 사과</h2>
+      <p>한 과수원에 담긴 다섯 가지 계절의 맛.</p>
+    </div>
+    <div class="var-grid">
+      <article class="var reveal" style="color:#C33F2C">
+        <div class="var-orb">
+          <svg viewBox="0 0 64 68" fill="none"><path d="M32 20c-4-4-11-4-14 1-4 7 0 20 6 25 3 2.6 6 2.6 8-.3 2 2.9 5 2.9 8 .3 6-5 10-18 6-25-3-5-10-5-14-1z" fill="currentColor"/><path d="M32 20c0-4 3-7 8-8-1 5-4 7-8 8z" fill="#7A7C4E"/><ellipse cx="24" cy="30" rx="6" ry="8" fill="#fff" opacity=".28"/></svg>
+        </div>
+        <div class="var-no">01</div>
+        <h4>아리수<span>Arisu</span></h4>
+        <p>아삭한 국산 품종</p>
+      </article>
+      <article class="var reveal d1" style="color:#9E2B1B">
+        <div class="var-orb">
+          <svg viewBox="0 0 64 68" fill="none"><path d="M32 20c-4-4-11-4-14 1-4 7 0 20 6 25 3 2.6 6 2.6 8-.3 2 2.9 5 2.9 8 .3 6-5 10-18 6-25-3-5-10-5-14-1z" fill="currentColor"/><path d="M32 20c0-4 3-7 8-8-1 5-4 7-8 8z" fill="#7A7C4E"/><ellipse cx="24" cy="30" rx="6" ry="8" fill="#fff" opacity=".28"/></svg>
+        </div>
+        <div class="var-no">02</div>
+        <h4>감홍<span>Gamhong</span></h4>
+        <p>진한 빛깔의 고당도</p>
+      </article>
+      <article class="var reveal d2" style="color:#D2971C">
+        <div class="var-orb">
+          <svg viewBox="0 0 64 68" fill="none"><path d="M32 20c-4-4-11-4-14 1-4 7 0 20 6 25 3 2.6 6 2.6 8-.3 2 2.9 5 2.9 8 .3 6-5 10-18 6-25-3-5-10-5-14-1z" fill="currentColor"/><path d="M32 20c0-4 3-7 8-8-1 5-4 7-8 8z" fill="#7A7C4E"/><ellipse cx="24" cy="30" rx="6" ry="8" fill="#fff" opacity=".3"/></svg>
+        </div>
+        <div class="var-no">03</div>
+        <h4>시나노골드<span>Shinano Gold</span></h4>
+        <p>새콤달콤한 골드</p>
+      </article>
+      <article class="var reveal d3" style="color:#E0B33C">
+        <div class="var-orb">
+          <svg viewBox="0 0 64 68" fill="none"><path d="M32 20c-4-4-11-4-14 1-4 7 0 20 6 25 3 2.6 6 2.6 8-.3 2 2.9 5 2.9 8 .3 6-5 10-18 6-25-3-5-10-5-14-1z" fill="currentColor"/><path d="M32 20c0-4 3-7 8-8-1 5-4 7-8 8z" fill="#7A7C4E"/><ellipse cx="24" cy="30" rx="6" ry="8" fill="#fff" opacity=".32"/></svg>
+        </div>
+        <div class="var-no">04</div>
+        <h4>골든볼<span>Golden Ball</span></h4>
+        <p>황금빛 부드러운 단맛</p>
+      </article>
+      <article class="var reveal d4" style="color:#D45E3E">
+        <div class="var-orb">
+          <svg viewBox="0 0 64 68" fill="none"><path d="M32 20c-4-4-11-4-14 1-4 7 0 20 6 25 3 2.6 6 2.6 8-.3 2 2.9 5 2.9 8 .3 6-5 10-18 6-25-3-5-10-5-14-1z" fill="currentColor"/><path d="M32 20c0-4 3-7 8-8-1 5-4 7-8 8z" fill="#7A7C4E"/><ellipse cx="24" cy="30" rx="6" ry="8" fill="#fff" opacity=".28"/></svg>
+        </div>
+        <div class="var-no">05</div>
+        <h4>이지플<span>Easy Peel</span></h4>
+        <p>껍질째 즐기는 사과</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GROWTH TIMELINE ================= -->
+<section class="section growth" id="growth">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Seasons</span>
+      <h2 style="margin-top:16px">사과가 자라는 시간</h2>
+      <p>계절의 흐름 속에서, 사과는 천천히 자랍니다.</p>
+    </div>
+
+    <div class="growth-track">
+      <div class="stage reveal">
+        <div class="stage-orb"><div class="ph-scene" data-scene="blossom"></div></div>
+        <div class="stage-no">01</div><h4>꽃</h4><p>봄, 꽃이 피고</p>
+      </div>
+      <div class="stage reveal d1">
+        <div class="stage-orb"><div class="ph-scene" data-scene="young"></div></div>
+        <div class="stage-no">02</div><h4>열매</h4><p>여름, 열매가 맺히고</p>
+      </div>
+      <div class="stage reveal d2">
+        <div class="stage-orb"><div class="ph-scene" data-scene="growing"></div></div>
+        <div class="stage-no">03</div><h4>성장</h4><p>가을, 붉게 익어가고</p>
+      </div>
+      <div class="stage reveal d3">
+        <div class="stage-orb"><div class="ph-scene" data-scene="harvest"></div></div>
+        <div class="stage-no">04</div><h4>수확</h4><p>정성껏 수확하여</p>
+      </div>
+      <div class="stage reveal d4">
+        <div class="stage-orb"><div class="ph-scene" data-scene="ship"></div></div>
+        <div class="stage-no">05</div><h4>출하</h4><p>신선하게 보내드립니다</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUOTE BAND ================= -->
+<section class="section" style="padding-block:clamp(30px,4vw,50px)">
+  <div class="quote-band reveal">
+    <!-- ▼ SWAP: 노을 진 과수원 풍경 사진 ▼ -->
+    <div class="ph-scene" data-scene="sunset"></div>
+    <span class="ph-tag">노을 · 과수원 풍경 · 사진 교체</span>
+    <div class="quote-inner">
+      <svg class="apple-ic" width="34" height="38" viewBox="0 0 34 38" fill="none"><path d="M17 12c-2.5-2.5-7.5-2.5-9 .8-2 4 .4 11 3.3 13.4 1.6 1.4 3.3 1.4 4.7.5 1.4.9 3.1.9 4.7-.5C23.6 23.8 26 16.8 24 12.8c-1.5-3.3-6.5-3.3-9-.8z" fill="#fff"/><path d="M17 12c0-2.5 1.7-4 4-5-.8 2.5-2 4-4 5z" fill="#B9C08A"/></svg>
+      <h2>자연을 닮은 사과,<br>정성을 담아 키웁니다.</h2>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY (30년 이야기) ================= -->
+<section class="section" id="story">
+  <div class="wrap">
+    <div class="story-grid">
+      <div class="story-copy">
+        <span class="eyebrow reveal">Our Story · 30 Years</span>
+        <h2 class="reveal d1">한 사람의 손끝에서<br>지나온 서른 번의 계절</h2>
+        <p class="lead reveal d2">강릉의 땅에서 30년. 더덕과 도라지, 고추와 깨, 고구마와 호두, 그리고 개드릅까지 — 계절마다 다른 작물을 심고 거두며 이 땅을 배워왔습니다.</p>
+        <p class="reveal d2">그 오랜 시간이 쌓여, 이제는 사과입니다. 올해로 두 번째 수확. 아직 어린 나무지만, 30년의 농사가 뿌리내린 땅 위에서 사과는 해마다 조금씩 더 단단하고 깊어집니다.</p>
+        <div class="crop-tags reveal d3">
+          <span>더덕</span><span>도라지</span><span>고추</span><span>깨</span><span>고구마</span><span>호두</span><span>개드릅</span><span class="apple">사과 · 2년차</span>
+        </div>
+      </div>
+      <div class="story-media reveal d1">
+        <!-- ▼ SWAP: 부모님이 일하시는 모습 / 사과 따는 손 사진 ▼ -->
+        <div class="ph-scene" data-scene="hands"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOCATION ================= -->
+<section class="section" id="location" style="padding-bottom:clamp(50px,7vw,90px)">
+  <div class="loc reveal">
+    <div class="loc-copy">
+      <span class="eyebrow" style="display:block;margin-bottom:20px">Visit &amp; Contact</span>
+      <h2>강릉에서<br>계절을 전합니다.</h2>
+      <div class="loc-row"><span class="k">Location</span><span class="v">강원특별자치도 강릉시 강동면 율곡로 791-28<br>
+        <a class="naver-link" target="_blank" rel="noopener" href="https://map.naver.com/p/search/강원특별자치도 강릉시 강동면 율곡로 791-28">
+          <span class="mb-logo">N</span>네이버 지도에서 보기
+          <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M3 10L10 3M5 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a></span></div>
+      <div class="loc-row"><span class="k">Contact</span><span class="v">대표 정의성 <a href="tel:010-8790-5593">010-8790-5593</a><br>대표 이명숙 <a href="tel:010-5027-5593">010-5027-5593</a></span></div>
+      <div class="loc-row"><span class="k">Email</span><span class="v">appleorchard@naver.com</span></div>
+      <div class="loc-row"><span class="k">Season</span><span class="v">가을 수확 · 한정 물량으로 전해드립니다</span></div>
+    </div>
+    <div class="loc-map">
+      <!-- 카카오맵 · 지도퍼가기 -->
+      <div id="daumRoughmapContainer1783303847219" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:18px">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none"><path d="M20 12c-3-3-9-3-11 1-2.5 5 .5 13 4 16 2 1.8 4 1.8 6 .6 2 1.2 4 1.2 6-.6 3.5-3 6.5-11 4-16-2-4-8-4-11-1z" fill="#C33F2C"/><path d="M20 12c0-3 2-5 5-6-1 3-2.5 5-5 6z" fill="#7A7C4E"/></svg>
+          <span class="brand-txt"><b>귀나무골 사과농장</b><span>GUINAMUGOL APPLE FARM</span></span>
+        </a>
+        <p style="color:var(--ink-soft);font-size:15px;max-width:30ch;margin-top:6px">30년의 농사, 그리고 사과 2년차.<br>자연의 시간을 담아 전합니다.</p>
+      </div>
+      <div>
+        <h5>Location</h5>
+        <span class="fitem">강원특별자치도 강릉시<br>강동면 율곡로 791-28</span>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <span class="fitem">대표 정의성 · 010-8790-5593</span>
+        <span class="fitem">대표 이명숙 · 010-5027-5593</span>
+        <a href="mailto:appleorchard@naver.com">appleorchard@naver.com</a>
+      </div>
+      <div>
+        <h5>Follow</h5>
+        <a href="#">Instagram</a>
+        <a href="#">Naver Blog</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <small>© 2026 Guinamugol Apple Farm. All rights reserved.</small>
+      <button class="to-top" id="toTop" aria-label="맨 위로">
+        <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 13V2M2 6l5-5 5 5" stroke="#292420" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---- nav scroll state ---- */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+/* ---- reveal on scroll ---- */
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.16, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+
+/* ---- hero apple parallax ---- */
+const apple = document.getElementById('heroApple');
+let ticking=false;
+addEventListener('scroll', ()=>{
+  if(ticking) return; ticking=true;
+  requestAnimationFrame(()=>{
+    const y = scrollY;
+    apple.style.transform = `translate(-50%,calc(-50% + ${y*0.12}px)) scale(${1 - Math.min(y/6000,.06)}) rotate(${y*0.004}deg)`;
+    ticking=false;
+  });
+},{passive:true});
+
+/* ---- to top ---- */
+document.getElementById('toTop').onclick = ()=>scrollTo({top:0,behavior:'smooth'});
+
+/* ---- mobile menu ---- */
+const burger = document.getElementById('navBurger');
+const navLinks = document.getElementById('navLinks');
+function toggleMenu(open){
+  const on = open ?? !nav.classList.contains('open');
+  nav.classList.toggle('open', on);
+  document.body.classList.toggle('menu-open', on);
+  burger.setAttribute('aria-expanded', on);
+  burger.setAttribute('aria-label', on ? '메뉴 닫기' : '메뉴 열기');
+}
+burger.addEventListener('click', ()=>toggleMenu());
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>toggleMenu(false)));
+
+/* ============================================================
+   PLACEHOLDER SCENES — generated as inline SVG in brand palette.
+   Each ".ph-scene[data-scene]" becomes a designed gradient scene.
+   To use a real photo instead, delete the div and drop in:
+     <img src="your-photo.jpg" alt="" style="width:100%;height:100%;object-fit:cover">
+   ============================================================ */
+const SCENES = {
+  'orchard-day': ['#DCE4C9','#A9B888','#6E7C4E', 'hills'],
+  'sunset':      ['#F6C89A','#E68B5B','#9A4A34', 'hills'],
+  'blossom':     ['#F7E6EC','#EEC6D2','#D98FA6', 'dot'],
+  'young':       ['#DDE7C6','#B7C98E','#8AA45C', 'dot'],
+  'growing':     ['#E7D79E','#D79A4E','#B7532E', 'dot'],
+  'harvest':     ['#F0B49E','#D45E3E','#A32C1C', 'dot'],
+  'ship':        ['#E9DCC5','#C9A876','#8A6A44', 'box'],
+  'hands':       ['#EDE0C9','#C99C6E','#7C5A3A', 'hills'],
+  'map':         ['#E9E3D6','#CFC7B4','#A9A08C', 'map'],
+};
+function scene([a,b,c,type]){
+  const id = 'g'+Math.random().toString(36).slice(2,8);
+  let art='';
+  if(type==='hills'){
+    art=`<path d="M0 210 Q125 150 250 195 T500 175 V300 H0Z" fill="${c}" opacity=".9"/>
+         <path d="M0 250 Q140 205 280 240 T500 235 V300 H0Z" fill="${c}"/>
+         <circle cx="400" cy="80" r="40" fill="#fff" opacity=".35"/>`;
+  } else if(type==='dot'){
+    art=`<circle cx="250" cy="160" r="78" fill="${c}" opacity=".85"/>
+         <circle cx="250" cy="160" r="78" fill="url(#hi${id})"/>
+         <ellipse cx="222" cy="132" rx="26" ry="32" fill="#fff" opacity=".28"/>`;
+  } else if(type==='box'){
+    art=`<rect x="150" y="150" width="200" height="110" rx="14" fill="${c}" opacity=".85"/>
+         <circle cx="200" cy="150" r="26" fill="${b}"/><circle cx="250" cy="146" r="28" fill="${c}"/><circle cx="300" cy="150" r="26" fill="${b}"/>`;
+  } else if(type==='map'){
+    art=`<path d="M0 120H500M0 200H500M180 0V300M330 0V300" stroke="${c}" stroke-width="6" opacity=".5"/>
+         <circle cx="250" cy="150" r="10" fill="${c}"/>`;
+  }
+  return `<svg viewBox="0 0 500 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>
+      <radialGradient id="hi${id}" cx="36%" cy="32%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="500" height="300" fill="url(#${id})"/>${art}
+  </svg>`;
+}
+document.querySelectorAll('.ph-scene[data-scene]').forEach(el=>{
+  const key = el.dataset.scene;
+  if(SCENES[key]) el.innerHTML = scene(SCENES[key]);
+});
+</script>
+
+<!-- ===== 카카오맵 지도퍼가기 · 설치 + 실행 스크립트 ===== -->
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+<script charset="UTF-8">
+  new daum.roughmap.Lander({
+    "timestamp" : "1783303847219",
+    "key" : "qcy7m3f5zit",
+    "mapWidth" : "100%",
+    "mapHeight" : "360"
+  }).render();
+</script>
+</body>
+</html>
